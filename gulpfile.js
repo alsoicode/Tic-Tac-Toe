@@ -10,7 +10,7 @@ var gulp = require('gulp'),
     cleanCSS = new LessPluginCleanCSS({ advanced: true }),
 	browserify = require('browserify'),
 	source = require('vinyl-source-stream'),
-	uglify = require('gulp-uglify'),
+	uglify = require('gulp-uglifyjs'),
 	concat = require('gulp-concat'),
 	mocha = require('gulp-mocha'),
 	staticRoot = 'static/',
@@ -21,7 +21,7 @@ var gulp = require('gulp'),
 		common: [
 			nodeModulesRoot + 'jquery/dist/jquery.js',
 			nodeModulesRoot + 'bootstrap/dist/bootstrap.js',
-			jsRoot + 'src/game.js'
+			nodeModulesRoot + 'underscore/underscore.js'
 		],
 		less: staticRoot + 'less/',
 		css: staticRoot + 'css/',
@@ -37,6 +37,19 @@ function getFileName(path) {
 	return path.substr(path.lastIndexOf('/') + 1);
 }
 
+gulp.task('compile-bootstrap', function() {
+	return gulp.src(nodeModulesRoot + 'bootstrap/less/**/*.less')
+		.pipe(plumber(function(error) {
+			gutil.beep();
+			gutil.log(error);
+		}))
+		.pipe(less({
+	        plugins: [cleanCSS]
+	      }))
+		.pipe(concat('bootstrap.min.css'))
+		.pipe(gulp.dest(paths.css));
+});
+
 // compile Less to CSS
 gulp.task('compile-less', function() {
   return gulp.src(paths.less + '*.less')
@@ -50,8 +63,8 @@ gulp.task('compile-less', function() {
     .pipe(gulp.dest(paths.css));
 });
 
-// concatenate common libraries into one file
-gulp.task('build-common-lib', function() {
+// concatenate common js libraries into one file
+gulp.task('build-common-js', function() {
 	return gulp.src(paths.common)
 		.pipe(concat('common.min.js'))
 		.pipe(uglify())
@@ -83,6 +96,12 @@ gulp.task('browserify', function(callback) {
 	callback();
 });
 
+gulp.task('uglify', function() {
+    return gulp.src(paths.jsRoot + 'src/game.js')
+        .pipe(uglify('game.min.js'))
+        .pipe(gulp.dest(paths.jsRoot + 'dist'));
+});
+
 gulp.task('test', function() {
     return gulp.src('tests/*.js', { read: false })
         .pipe(mocha({
@@ -105,4 +124,4 @@ gulp.task('watch', function() {
 
 gulp.task('serve', serve('.'));
 
-gulp.task('default', ['watch', 'serve']);
+gulp.task('default', ['uglify', 'watch', 'serve']);
