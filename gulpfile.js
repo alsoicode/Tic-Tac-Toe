@@ -13,6 +13,7 @@ var gulp = require('gulp'),
 	uglify = require('gulp-uglifyjs'),
 	concat = require('gulp-concat'),
 	mocha = require('gulp-mocha'),
+	rename = require('gulp-rename'),
 	staticRoot = 'static/',
 	jsRoot = staticRoot + 'js/',
 	nodeModulesRoot = 'node_modules/',
@@ -60,6 +61,7 @@ gulp.task('compile-less', function() {
     .pipe(less({
         plugins: [cleanCSS]
       }))
+	.pipe(rename({ suffix: '.min' }))
     .pipe(gulp.dest(paths.css));
 });
 
