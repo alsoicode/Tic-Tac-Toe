@@ -7,9 +7,40 @@
     <title>Tic Tac Toe</title>
 
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/static/css/game.min.css" rel="stylesheet">
   </head>
   <body>
-    <h1>Hello, world!</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+          <table class="table" id="board">
+            <tbody>
+              <tr>
+                <td data-position="1" class="win"><i class="fa fa-remove"></i></td>
+                <td data-position="2"><i class="fa fa-circle-o"></i></td>
+                <td data-position="3"><i class="fa fa-circle-o"></i></td>
+              </tr>
+              <tr>
+                <td data-position="4" class="win"><i class="fa fa-remove"></i></td>
+                <td data-position="5"><i class="fa fa-circle-o"></i></td>
+                <td data-position="6"><i class="fa fa-remove"></i></td>
+              </tr>
+              <tr>
+                <td data-position="7" class="win"><i class="fa fa-remove"></i></td>
+                <td data-position="8"><i class="fa fa-remove"></i></td>
+                <td data-position="9"><i class="fa fa-circle-o"></i></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row controls">
+        <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+          <button class="btn">Reset</button>
+        </div>
+      </div>
+    </div>
 
     <script src="/static/js/dist/common.min.js"></script>
     <script src="/static/js/dist/game.min.js"></script>

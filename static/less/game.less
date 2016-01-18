@@ -1,0 +1,66 @@
+body {
+    margin-top: 25vh;
+}
+
+// board
+#board {
+    height: 50vh;
+    margin: 0 auto;
+    text-align: center;
+    width: 50vw;
+
+    tr:first-child {
+        td {
+            border-top: 0 none;
+
+            &:first-child {
+                border-left: 0 none;
+            }
+
+            &:last-child {
+                border-right: 0 none;
+            }
+        }
+    }
+
+    tr:nth-child(2) {
+        td {
+            &:first-child {
+                border-left: 0 none;
+            }
+
+            &:last-child {
+                border-right: 0 none;
+            }
+        }
+    }
+
+    tr:last-child {
+        td {
+            border-bottom: 0 none;
+
+            &:first-child {
+                border-left: 0 none;
+            }
+
+            &:last-child {
+                border-right: 0 none;
+            }
+        }
+    }
+
+    td {
+        border: solid 3px #ccc;
+        font-size: 10em;
+        min-width: 33%;
+        vertical-align: middle;
+
+        &.win {
+            color: red;
+        }
+    }
+}
+
+.controls {
+    margin-top: 30px;
+}
