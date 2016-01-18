@@ -99,8 +99,11 @@ gulp.task('browserify', function(callback) {
 });
 
 gulp.task('uglify', function() {
-    return gulp.src(paths.jsRoot + 'src/game.js')
-        .pipe(uglify('game.min.js'))
+    return gulp.src(paths.jsRoot + 'src/*.js')
+        .pipe(uglify())
+		.pipe(rename({
+			suffix: '.min'
+		}))
         .pipe(gulp.dest(paths.jsRoot + 'dist'));
 });
 
@@ -121,9 +124,10 @@ gulp.task('test', function() {
 
 gulp.task('watch', function() {
 	gulp.watch(paths.less + '*.less', ['compile-less']).on('change', reportChange);
-	gulp.watch(jsRoot + '*.js', ['browserify']).on('change', reportChange);
+	// gulp.watch(jsRoot + '*.js', ['browserify']).on('change', reportChange);
+	gulp.watch(jsRoot + 'src/*.js', ['uglify']).on('change', reportChange);
 });
 
 gulp.task('serve', serve('.'));
 
-gulp.task('default', ['uglify', 'watch', 'serve']);
+gulp.task('default', ['watch', 'serve']);
