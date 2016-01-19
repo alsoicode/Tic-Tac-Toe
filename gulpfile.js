@@ -26,7 +26,7 @@ var gulp = require('gulp'),
 		],
 		less: staticRoot + 'less/',
 		css: staticRoot + 'css/',
-		browserifySrc: [],
+		browserifySrc: [jsRoot + 'src/game.js'],
 		jsDist: jsRoot + 'dist/'
 	};
 
@@ -92,6 +92,9 @@ gulp.task('browserify', function(callback) {
 				  gutil.log(error);
 				}))
 				.pipe(source(filename))
+				.pipe(rename({
+					suffix: '.min'
+				}))
 				.pipe(gulp.dest(paths.jsDist));
 	});
 
@@ -124,8 +127,7 @@ gulp.task('test', function() {
 
 gulp.task('watch', function() {
 	gulp.watch(paths.less + '*.less', ['compile-less']).on('change', reportChange);
-	// gulp.watch(jsRoot + '*.js', ['browserify']).on('change', reportChange);
-	gulp.watch(jsRoot + 'src/*.js', ['uglify']).on('change', reportChange);
+	gulp.watch(jsRoot + 'src/*.js', ['browserify']).on('change', reportChange);
 });
 
 gulp.task('serve', serve('.'));
