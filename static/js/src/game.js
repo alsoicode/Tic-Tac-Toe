@@ -33,7 +33,7 @@ var TicTacToe = (function($) {
         for (var i = 0; i < combo.length; i++) {
             $('[data-position="' + combo[i] + '"]').addClass('win');
         }
-    }
+    };
 
     var _checkWinner = function() {
 
