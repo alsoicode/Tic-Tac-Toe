@@ -10,7 +10,7 @@ var TicTacToe = (function($) {
     var _reset = function() {
         TicTacToe.resetControls.hide();
         TicTacToe.newGameControls.show();
-        TicTacToe.positions.html('').removeClass('selected');
+        TicTacToe.positions.html('').removeClass('selected win');
         TicTacToe.player = {
             positions: [],
             winner: false
@@ -29,20 +29,28 @@ var TicTacToe = (function($) {
         TicTacToe.activePlayer = TicTacToe.activePlayer === TicTacToe.player ? TicTacToe.ai : TicTacToe.player;
     };
 
+    var _markWinningCombination = function(combo) {
+        for (var i = 0; i < combo.length; i++) {
+            $('[data-position="' + combo[i] + '"]').addClass('win');
+        }
+    }
+
     var _checkWinner = function() {
 
         // compare activePlayer positions to winning combinations
-        _.each(TicTacToe.winningCombinations, function(combo) {
-
-            console.log(TicTacToe.activePlayer.positions, combo);
-
-            // console.log(_.intersection(combo, TicTacToe.activePlayer.positions).length);
+        for (var i = 0; i < TicTacToe.winningCombinations.length; i++) {
+            var combo = TicTacToe.winningCombinations[i];
 
             if (_.intersection(combo, TicTacToe.activePlayer.positions).length === 3) {
                 TicTacToe.activePlayer.winner = true;
-                alert('winner');
+                _markWinningCombination(combo);
+                break;
             }
-        });
+        }
+
+        if (!TicTacToe.activePlayer.winner) {
+            _toggleActivePlayer();
+        }
     };
 
     var _play = function() {
@@ -66,19 +74,17 @@ var TicTacToe = (function($) {
                 target.addClass('selected').html(TicTacToe.sides[TicTacToe.player.side]);
 
                 // get position selected
-                var selectedPosition = target.data('position')
+                var selectedPosition = target.data('position');
 
                 // Remove position from availablePositions
                 TicTacToe.availablePositions = _.reject(TicTacToe.availablePositions, function(position) {
                     return position === selectedPosition;
-                })
+                });
 
                 // add position to player's positions
                 TicTacToe.player.positions.push(selectedPosition);
 
                 _checkWinner();
-
-                // check for winner
             }
         });
     };
