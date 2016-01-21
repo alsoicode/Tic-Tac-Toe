@@ -10,6 +10,7 @@ var TicTacToe = (function($) {
     var _reset = function() {
         TicTacToe.resetControls.hide();
         TicTacToe.newGameControls.show();
+        TicTacToe.board.removeClass('tie');
         TicTacToe.positions.html('').removeClass('selected win');
         TicTacToe.player = {
             name: 'human',
@@ -107,6 +108,11 @@ var TicTacToe = (function($) {
             }
         }
 
+        // Tie
+        if (TicTacToe.player.positions.length === 5 && TicTacToe.ai.positions.length === 5) {
+            TicTacToe.board.addClass('tie');
+        }
+
         if (!TicTacToe.activePlayer.winner) {
 
             _toggleActivePlayer();
@@ -141,8 +147,8 @@ var TicTacToe = (function($) {
 
     var init = function() {
         // get available positions and clear the board
+        TicTacToe.board = $('#board');
         TicTacToe.positions = $('#board td');
-
         TicTacToe.winningCombinations = [
             // horizontal
             [1, 2, 3], [4, 5, 6], [7, 8, 9],

@@ -9,6 +9,16 @@ body {
     text-align: center;
     width: 50vw;
 
+    &.tie {
+        td {
+            color: #999;
+
+            &.selected {
+                cursor: default;
+            }
+        }
+    }
+
     tr:first-child {
         td {
             border-top: 0 none;
@@ -51,11 +61,16 @@ body {
 
     td {
         border: solid 3px #ccc;
+        cursor: crosshair;
         font-size: 10em;
         line-height: 140px;
         height: 33%;
         vertical-align: middle;
         width: 33%;
+
+        &.selected, &.win {
+            cursor: not-allowed;
+        }
 
         &.win {
             color: red;
