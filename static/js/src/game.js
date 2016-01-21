@@ -63,23 +63,32 @@ var TicTacToe = (function($) {
                 comboIntersection = comboIntersections[intersection.length],
                 difference = _.difference(combo, intersection, TicTacToe.ai.positions);
 
-            if (comboIntersection === undefined) {
-                comboIntersections[intersection.length] = [difference];
-            }
-            else {
-                comboIntersection.push(difference);
+            if (difference.length > 0) {
+                if (comboIntersection === undefined) {
+                    comboIntersections[intersection.length] = [difference];
+                }
+                else {
+                    comboIntersection.push(difference);
+                }
             }
         });
 
         // get highest key of intersections, as that will be the array of the fewest
-        // moves remaining to win, then pick a random value from the positions
-        // that would block the opposing player
+        // moves remaining to win for the player, then pick a random value from the
+        // positions that would block the opposing player
         var keys = _.keys(comboIntersections),
-            index = keys.sort(function(a, b) { return a - b; })[keys.length - 1],
-            blockingPositions = _.flatten(comboIntersections[index]),
-            aiNextPosition = _.sample(blockingPositions);
+            index = parseInt(keys.sort(function(a, b) { return a - b; })[keys.length - 1]),
+            blockingPositions = _.flatten(_.difference(comboIntersections[index], TicTacToe.player.positions, TicTacToe.ai.positions)),
+            aiNextPosition;
 
-        console.log(blockingPositions, aiNextPosition);
+        // Pick at random. If the middle is available, choose it out of spite
+        if (index === 1) {
+            aiNextPosition = _.indexOf(blockingPositions, 5) > -1 ? 5 : _.sample(blockingPositions);
+        }
+        else {
+            // block the shortest winning combo of the player
+            aiNextPosition = blockingPositions[0];
+        }
 
         // mark position and check for winner
         _markPosition(aiNextPosition);
