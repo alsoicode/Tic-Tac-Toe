@@ -1,7 +1,9 @@
-var _ = require('underscore');
+;'use strict';
+
+var _ = require('underscore'),
+    player = require('./player');
 
 var TicTacToe = (function($) {
-    'use strict';
 
     $(document).ready(function() {
         TicTacToe.init();
@@ -12,16 +14,12 @@ var TicTacToe = (function($) {
         TicTacToe.newGameControls.show();
         TicTacToe.board.removeClass('tie');
         TicTacToe.positions.html('').removeClass('selected win');
-        TicTacToe.player = {
-            name: 'human',
-            positions: [],
-            winner: false
-        };
-        TicTacToe.ai = {
-            name: 'ai',
-            positions: [],
-            winner: false
-        };
+
+        var player1 = new player(),
+            ai = new player('computer', true);
+
+        TicTacToe.player = player1;
+        TicTacToe.ai = ai;
 
         // humans first
         TicTacToe.activePlayer = TicTacToe.player;
@@ -117,7 +115,7 @@ var TicTacToe = (function($) {
 
             _toggleActivePlayer();
 
-            if (TicTacToe.activePlayer.name == 'ai') {
+            if (TicTacToe.activePlayer.isAI) {
                 _aiTurn();
             }
         }
