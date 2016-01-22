@@ -1,5 +1,5 @@
 body {
-    margin-top: 25vh;
+    margin-top: 10vh;
 }
 
 h1 {
@@ -24,6 +24,12 @@ h1 {
             &.selected {
                 cursor: default;
             }
+        }
+    }
+
+    &.active {
+        td:hover {
+            background-color: #f2f2f2;
         }
     }
 
@@ -68,16 +74,21 @@ h1 {
     }
 
     td {
-        border: solid 3px #ccc;
+        border: solid 7px #ccc;
         cursor: crosshair;
         font-size: 10em;
         line-height: 140px;
+        min-height: 100px;
         height: 33%;
         vertical-align: middle;
+        min-width: 100px;
         width: 33%;
 
         &.selected, &.win {
             cursor: not-allowed;
+            &:hover {
+                background-color: transparent;
+            }
         }
 
         &.win {

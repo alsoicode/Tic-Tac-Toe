@@ -12,7 +12,7 @@ var TicTacToe = (function($) {
     var _reset = function() {
         TicTacToe.resetControls.hide();
         TicTacToe.newGameControls.show();
-        TicTacToe.board.removeClass('tie');
+        TicTacToe.board.removeClass('tie active');
         TicTacToe.message.html('');
         TicTacToe.instructions.html('');
         TicTacToe.positions.html('').removeClass('selected win');
@@ -133,6 +133,7 @@ var TicTacToe = (function($) {
             if (_.intersection(combo, TicTacToe.activePlayer.positions).length === 3) {
                 TicTacToe.activePlayer.winner = true;
                 _markWinningCombination(combo);
+                TicTacToe.board.removeClass('active');
                 _setMessage(TicTacToe.activePlayer.fullName + ' wins!');
                 break;
             }
@@ -141,6 +142,7 @@ var TicTacToe = (function($) {
         // Tie
         if (TicTacToe.player.positions.length > 4 || TicTacToe.ai.positions.length > 4) {
             TicTacToe.board.addClass('tie');
+            TicTacToe.board.removeClass('active');
             _setMessage('Tie Game');
             TicTacToe.instructions.html('Please try again!');
         }
@@ -160,6 +162,7 @@ var TicTacToe = (function($) {
         // Choose side
         TicTacToe.newGameControls.find('.btn').on('click', function(e) {
             var target = $(e.currentTarget);
+            TicTacToe.board.addClass('active');
             TicTacToe.player.side = target.val();
             TicTacToe.ai.side = TicTacToe.player.side == 'x' ? 'o' : 'x';
             TicTacToe.resetControls.show();
