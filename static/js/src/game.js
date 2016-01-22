@@ -47,6 +47,7 @@ var TicTacToe = (function($) {
 
         // add position to player's positions
         TicTacToe.activePlayer.positions.push(position);
+
         _checkWinner();
     };
 
@@ -82,23 +83,37 @@ var TicTacToe = (function($) {
             blockingPositions = _.flatten(_.difference(comboIntersections[index], TicTacToe.player.positions, TicTacToe.ai.positions)),
             aiNextPosition;
 
-        // if there are two open positions in any blocking combinations
+        // if there are two open positions in any blocking combinations...
         if (index === 1) {
 
-            // if player has chosen middle, choose a corner
+            // ... and player has chosen middle, choose a corner...
             if (TicTacToe.player.positions.length === 1 && TicTacToe.player.positions[0] === 5) {
                 aiNextPosition = _.sample(_.reject(blockingPositions, function(position) {
                     return position % 2 === 0;
                 }));
             }
             else {
-                // Pick at random. If the middle is available, choose it out of spite
+                // ... otherwise, pick at random. If the middle is available, choose it out of spite
                 aiNextPosition = _.indexOf(blockingPositions, 5) > -1 ? 5 : _.sample(blockingPositions);
             }
         }
         else {
-            // block the shortest winning combo of the player
-            aiNextPosition = blockingPositions[0];
+            // if there is a combo with only one position left to win, choose it
+            for (var i = 0; i < TicTacToe.winningCombinations.length; i++) {
+                var combo = TicTacToe.winningCombinations[i],
+                    intersection = _.intersection(combo, TicTacToe.ai.positions),
+                    difference = _.difference(combo, intersection, TicTacToe.player.positions);
+
+                    if (intersection.length === 2 && difference.length == 1) {
+                        aiNextPosition = difference[0];
+                        break;
+                    }
+            }
+
+            // otherwise, block the shortest winning combo of the player
+            if (!aiNextPosition) {
+                aiNextPosition = blockingPositions[0];
+            }
         }
 
         // mark position and check for winner
