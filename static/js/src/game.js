@@ -82,9 +82,19 @@ var TicTacToe = (function($) {
             blockingPositions = _.flatten(_.difference(comboIntersections[index], TicTacToe.player.positions, TicTacToe.ai.positions)),
             aiNextPosition;
 
-        // Pick at random. If the middle is available, choose it out of spite
+        // if there are two open positions in any blocking combinations
         if (index === 1) {
-            aiNextPosition = _.indexOf(blockingPositions, 5) > -1 ? 5 : _.sample(blockingPositions);
+
+            // if player has chosen middle, choose a corner
+            if (TicTacToe.player.positions.length === 1 && TicTacToe.player.positions[0] === 5) {
+                aiNextPosition = _.sample(_.reject(blockingPositions, function(position) {
+                    return position % 2 === 0;
+                }));
+            }
+            else {
+                // Pick at random. If the middle is available, choose it out of spite
+                aiNextPosition = _.indexOf(blockingPositions, 5) > -1 ? 5 : _.sample(blockingPositions);
+            }
         }
         else {
             // block the shortest winning combo of the player
@@ -114,7 +124,7 @@ var TicTacToe = (function($) {
         }
 
         // Tie
-        if (TicTacToe.player.positions.length === 5 && TicTacToe.ai.positions.length === 5) {
+        if (TicTacToe.player.positions.length > 4 || TicTacToe.ai.positions.length > 4) {
             TicTacToe.board.addClass('tie');
             _setMessage('Tie Game');
             TicTacToe.instructions.html('Please try again!');
@@ -144,11 +154,13 @@ var TicTacToe = (function($) {
 
         // select position
         TicTacToe.positions.on('click', function(e) {
-            var target = $(this);
+            if (TicTacToe.activePlayer.side !== null) {
+                var target = $(this);
 
-            // if player has chosen a side and the space is available, mark it
-            if (TicTacToe.player.side !== undefined && !target.hasClass('selected')) {
-                _markPosition(target.data('position'));
+                // if player has chosen a side and the space is available, mark it
+                if (TicTacToe.player.side !== undefined && !target.hasClass('selected')) {
+                    _markPosition(target.data('position'));
+                }
             }
         });
     };
