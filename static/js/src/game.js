@@ -13,6 +13,8 @@ var TicTacToe = (function($) {
         TicTacToe.resetControls.hide();
         TicTacToe.newGameControls.show();
         TicTacToe.board.removeClass('tie');
+        TicTacToe.message.html('');
+        TicTacToe.instructions.html('');
         TicTacToe.positions.html('').removeClass('selected win');
 
         var player1 = new player(),
@@ -93,6 +95,10 @@ var TicTacToe = (function($) {
         _markPosition(aiNextPosition);
     };
 
+    var _setMessage = function(message) {
+            TicTacToe.message.html(message);
+    };
+
     var _checkWinner = function() {
 
         // compare activePlayer positions to winning combinations
@@ -102,6 +108,7 @@ var TicTacToe = (function($) {
             if (_.intersection(combo, TicTacToe.activePlayer.positions).length === 3) {
                 TicTacToe.activePlayer.winner = true;
                 _markWinningCombination(combo);
+                _setMessage(TicTacToe.activePlayer.fullName + ' wins!');
                 break;
             }
         }
@@ -109,6 +116,8 @@ var TicTacToe = (function($) {
         // Tie
         if (TicTacToe.player.positions.length === 5 && TicTacToe.ai.positions.length === 5) {
             TicTacToe.board.addClass('tie');
+            _setMessage('Tie Game');
+            TicTacToe.instructions.html('Please try again!');
         }
 
         if (!TicTacToe.activePlayer.winner) {
@@ -130,6 +139,7 @@ var TicTacToe = (function($) {
             TicTacToe.ai.side = TicTacToe.player.side == 'x' ? 'o' : 'x';
             TicTacToe.resetControls.show();
             TicTacToe.newGameControls.hide();
+            TicTacToe.instructions.html('Place an "' + TicTacToe.activePlayer.side + '" in an open space by clicking or tapping on it.');
         });
 
         // select position
@@ -147,6 +157,8 @@ var TicTacToe = (function($) {
         // get available positions and clear the board
         TicTacToe.board = $('#board');
         TicTacToe.positions = $('#board td');
+        TicTacToe.message = $('.msg');
+        TicTacToe.instructions = $('.instructions');
         TicTacToe.winningCombinations = [
             // horizontal
             [1, 2, 3], [4, 5, 6], [7, 8, 9],
