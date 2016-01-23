@@ -116,4 +116,20 @@ describe('Tic Tac Toe functional tests', function() {
         });
     });
 
+    describe('When the AI has two postions of a winning combo and the player does not', function() {
+        it('should result in the AI choosing the winning position', function(done) {
+
+            _.each(TicTacToe.winningCombinations, function(combo) {
+                for (var i = 0; i < combo.length; i++) {
+                    TicTacToe.ai.positions = _.without(combo, combo[i]);
+                    TicTacToe.checkWinner();
+                    assert.deepStrictEqual(_.difference(TicTacToe.ai.positions, combo), []);
+                    TicTacToe.reset();
+                }
+            });
+
+            done();
+        });
+    });
+
 });
