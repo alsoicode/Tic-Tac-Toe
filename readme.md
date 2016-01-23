@@ -49,10 +49,10 @@ Functional tests are provided via Mocha in the `/tests` directory. You may run t
 
 The game "board" is comprised of 9 "positions" in a 3 x 3 x 3 grid.
 
-| 1 | 2 | 3 |
-| - | - | - |
-| **4** | **5** | **6** |
-| **7** | **8** | **9** |
+1 | 2 | 3
+- | - | -
+**4** | **5** | **6**
+**7** | **8** | **9**
 
 There are 8 possible combinations along the vertical, horizontal or diagonal axis that constitute a "win".
 
