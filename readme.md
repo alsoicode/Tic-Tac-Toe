@@ -49,6 +49,13 @@ Functional tests are provided via Mocha in the `/tests` directory. You may run t
 
 The game "board" is comprised of 9 "positions" in a 3 x 3 x 3 grid.
 
+<table>
+    <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+    </tr>
+</table>
 1 | 2 | 3
 - | - | -
 **4** | **5** | **6**
