@@ -129,10 +129,6 @@ describe('Tic Tac Toe functional tests', function() {
             });
 
             done();
-<<<<<<< HEAD
-=======
-
->>>>>>> master
         });
     });
 
