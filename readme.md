@@ -55,11 +55,17 @@ The game "board" is comprised of 9 "positions" in a 3 x 3 x 3 grid.
         <td>2</td>
         <td>3</td>
     </tr>
+    <tr>
+        <td>4</td>
+        <td>5</td>
+        <td>6</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>8</td>
+        <td>9</td>
+    </tr>
 </table>
-1 | 2 | 3
-- | - | -
-**4** | **5** | **6**
-**7** | **8** | **9**
 
 There are 8 possible combinations along the vertical, horizontal or diagonal axis that constitute a "win".
 
