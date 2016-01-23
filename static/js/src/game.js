@@ -213,8 +213,22 @@ var TicTacToe = (function($) {
         _reset();
     };
 
-    return {
+    var toReturn = {
         init: init
     };
 
+    /* test-code */
+    // expose private methods for testing
+    var toReturn = {
+        init: init,
+        reset: _reset,
+        checkWinner: _checkWinner,
+        aiTurn: _aiTurn
+    };
+    /* end-test-code */
+
+    return toReturn;
+
 })(window.jQuery);
+
+module.exports = TicTacToe;

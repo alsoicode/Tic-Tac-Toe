@@ -14,6 +14,7 @@ var gulp = require('gulp'),
 	concat = require('gulp-concat'),
 	mocha = require('gulp-mocha'),
 	rename = require('gulp-rename'),
+    stripCode = require('gulp-strip-code'),
 	staticRoot = 'static/',
 	jsRoot = staticRoot + 'js/',
 	nodeModulesRoot = 'node_modules/',
@@ -92,6 +93,7 @@ gulp.task('browserify', function(callback) {
 				  gutil.log(error);
 				}))
 				.pipe(source(filename))
+				.pipe(stripCode())
 				.pipe(rename({
 					suffix: '.min'
 				}))
