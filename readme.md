@@ -9,10 +9,26 @@ My take on the classic board game using the revealing module pattern.
 - [Underscore](http://underscorejs.org/)
 - [Mocha](https://mochajs.org/)
 
+## Requirements
+- [Node](https://nodejs.org/en/)
+- [npm](https://www.npmjs.com/)
+
 ## How to run the app
 - Clone this repository
+- Install dependencies: `$ npm install`
 - Run: `gulp serve`
 - Visit: [http://localhost:3000](http://localhost:3000) in your browser
+
+## Deployment
+This app is static and does not require Node.js to run. Simply deploy the following files and directories to your server:
+
+    index.html
+    /static
+        /images
+        /css
+        /js/dist
+            common.min.js
+            game.min.js
 
 ## Working with the code
 The main JavaScript file for the game is at `/static/js/src/game.js`. Gulp is used to process this file as changes are made passing it through a few tasks to Browserify the file, minify, uglify and create a source map.
